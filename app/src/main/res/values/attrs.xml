@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DoubleSliderView">
+        <attr name="normalIcon" format="reference" />
+        <attr name="touchIcon" format="reference" />
+        <attr name="lineSize" format="dimension" />
+        <attr name="middleAlpha" format="float" />
+        <attr name="totalCurrent" format="integer" />
+        <attr name="minCurrent" format="integer" />
+        <attr name="maxCurrent" format="integer" />
+        <attr name="startCurrent" format="integer" />
+        <attr name="durationCurrent" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ShapeView">
+
+        <attr name="shape" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="square" value="1" />
+            <enum name="Rectangle" value="2" />
+            <enum name="triangle" value="3" />
+        </attr>
+        <attr name="shapePadding" format="reference|dimension" />
+
+    </declare-styleable>
+
+</resources>

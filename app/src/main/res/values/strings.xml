@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">StickerDemo</string>
+    <string name="double_add_txt">双击添加文字</string>
+</resources>

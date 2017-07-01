@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.wanyueliang.stickerdemo.wediget.textview.AutoResizeTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="none"
+    android:background="@drawable/bg_border_stroke"
+    android:text="@string/double_add_txt"
+    android:textSize="40sp"
+    />
