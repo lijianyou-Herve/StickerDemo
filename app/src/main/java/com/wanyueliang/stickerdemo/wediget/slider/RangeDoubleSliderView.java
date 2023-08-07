@@ -6,11 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.wanyueliang.stickerdemo.R;
 
@@ -121,8 +122,8 @@ class RangeDoubleSliderView extends View {
          *默认使用主题的colorAccent颜色
          * */
         TypedArray array = getContext().getTheme().obtainStyledAttributes(new int[]{
-                R.attr.colorAccent,
-                R.attr.colorPrimary,
+                androidx.appcompat.R.attr.colorPrimary,
+                androidx.appcompat.R.attr.colorPrimary,
         });
 
         int colorAccent = array.getColor(0, Color.RED);

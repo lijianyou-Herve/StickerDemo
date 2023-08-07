@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.SparseIntArray;
 import android.util.TypedValue;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class AutoResizeTextView extends AppCompatTextView {
     private interface SizeTester {

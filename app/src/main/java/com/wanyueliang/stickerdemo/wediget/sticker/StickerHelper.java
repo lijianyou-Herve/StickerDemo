@@ -5,11 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View.MeasureSpec;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.wanyueliang.stickerdemo.R;
 import com.wanyueliang.stickerdemo.utils.AppLog;

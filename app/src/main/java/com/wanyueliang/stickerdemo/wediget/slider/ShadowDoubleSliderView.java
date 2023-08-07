@@ -12,7 +12,7 @@ import com.wanyueliang.stickerdemo.bean.EditBean;
 
 import java.util.List;
 
-class ShadowDoubleSliderView extends RangeDoubleSliderView {
+public class ShadowDoubleSliderView extends RangeDoubleSliderView {
 
     private final String TAG = getClass().getSimpleName();
     private Context mContext;

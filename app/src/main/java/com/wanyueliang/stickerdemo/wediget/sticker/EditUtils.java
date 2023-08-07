@@ -1,7 +1,8 @@
 package com.wanyueliang.stickerdemo.wediget.sticker;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.wanyueliang.stickerdemo.utils.AppLog;
 import com.wanyueliang.stickerdemo.wediget.sticker.bean.item.CropMenuEdgeDistanceBean;

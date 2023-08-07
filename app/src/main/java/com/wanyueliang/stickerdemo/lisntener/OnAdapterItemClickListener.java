@@ -1,7 +1,8 @@
 package com.wanyueliang.stickerdemo.lisntener;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public interface OnAdapterItemClickListener {
