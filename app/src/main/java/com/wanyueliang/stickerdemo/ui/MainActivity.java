@@ -6,9 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.widget.LinearLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String TAG = "MainActivity";
 
     private Context mContext;
     /*View*/
@@ -125,11 +125,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMatchEditSelected(EditBean editBean) {
 
+                Log.i(TAG, "onMatchEditSelected: ");
             }
 
             @Override
             public void onMatchEditChange(EditBean editBean) {
 
+                Log.i(TAG, "onMatchEditSelected: ");
+
+            }
+
+            @Override
+            public void onLeftSliderChange(int leftCurrent, int rightCurrent, int totalCurrent) {
+                super.onLeftSliderChange(leftCurrent, rightCurrent, totalCurrent);
+            }
+
+            @Override
+            public void onRightSliderChange(int leftCurrent, int rightCurrent, int totalCurrent) {
+                super.onRightSliderChange(leftCurrent, rightCurrent, totalCurrent);
             }
         });
 
