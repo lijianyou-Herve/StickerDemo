@@ -345,7 +345,10 @@ public class StickerView extends View {
                         mHandlingSticker != null &&
                         isInStickerArea(mHandlingSticker, event.getX(1), event.getY(1)) &&
                         !checkDeleteIconTouched(mIconExtraRadius))
-
+                    //更新
+                    if (touchOnSelect && mHandlingSticker != null) {
+                        mDownMatrix.set(mHandlingSticker.getMatrix());
+                    }
                     mCurrentMode = ActionMode.ZOOM_WITH_TWO_FINGER;
                 break;
 

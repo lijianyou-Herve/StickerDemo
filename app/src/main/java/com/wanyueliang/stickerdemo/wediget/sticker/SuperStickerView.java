@@ -313,20 +313,19 @@ public class SuperStickerView extends View {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                mCurrentMode = ActionMode.DRAG;
-
+                setCurrentMode(ActionMode.DRAG);
                 mDownX = event.getX();
                 mDownY = event.getY();
 
                 if (checkDeleteIconTouched(mIconExtraRadius)) {
                     touchOnSelect = true;
-                    mCurrentMode = ActionMode.DELETE;
+                    setCurrentMode(ActionMode.DELETE);
                 } else if (checkHorizontalFlipIconTouched(mIconExtraRadius)) {
                     touchOnSelect = true;
-                    mCurrentMode = ActionMode.FLIP_HORIZONTAL;
+                    setCurrentMode(ActionMode.FLIP_HORIZONTAL);
                 } else if (checkZoomIconTouched(mIconExtraRadius) && mHandlingSticker != null) {
                     touchOnSelect = true;
-                    mCurrentMode = ActionMode.ZOOM_WITH_ICON;
+                    setCurrentMode(ActionMode.ZOOM_WITH_ICON);
                     mMidPoint = calculateMidPoint();
                     mOldDistance = calculateDistance(mMidPoint.x, mMidPoint.y, mDownX, mDownY);
                     mOldRotation = calculateRotation(mMidPoint.x, mMidPoint.y, mDownX, mDownY);
@@ -355,8 +354,11 @@ public class SuperStickerView extends View {
                         mHandlingSticker != null &&
                         isInStickerArea(mHandlingSticker, event.getX(1), event.getY(1)) &&
                         !checkDeleteIconTouched(mIconExtraRadius))
-
-                    mCurrentMode = ActionMode.ZOOM_WITH_TWO_FINGER;
+                    //更新
+                    if (touchOnSelect && mHandlingSticker != null) {
+                        mDownMatrix.set(mHandlingSticker.getMatrix());
+                    }
+                    setCurrentMode(ActionMode.ZOOM_WITH_TWO_FINGER);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -395,11 +397,11 @@ public class SuperStickerView extends View {
                 }
 
 
-                mCurrentMode = ActionMode.NONE;
+                setCurrentMode(ActionMode.NONE);
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
-                mCurrentMode = ActionMode.NONE;
+                setCurrentMode(ActionMode.NONE);
                 break;
 
         }//end of switch(action)
@@ -408,16 +410,21 @@ public class SuperStickerView extends View {
     }
 
 
+    private void setCurrentMode(ActionMode actionMode) {
+        mCurrentMode = actionMode;
+        Log.i(TAG, "setCurrentMode: SET actionMode  = " + actionMode);
+    }
+
     private void handleCurrentMode(MotionEvent event) {
         switch (mCurrentMode) {
             case NONE:
                 break;
             case DRAG:
-
                 if (touchOnSelect && mHandlingSticker != null) {
+                    Log.i(TAG, "setCurrentMode: CHANGE actionMode");
                     mMoveMatrix.set(mDownMatrix);
                     mMoveMatrix.postTranslate(event.getX() - mDownX, event.getY() - mDownY);
-//                            mHandlingSticker.getMatrix().reset();
+                            mHandlingSticker.getMatrix().reset();
                     mHandlingSticker.getMatrix().set(mMoveMatrix);
                 }
                 break;
@@ -518,7 +525,41 @@ public class SuperStickerView extends View {
 
     private boolean isInStickerArea(Sticker sticker, float downX, float downY) {
         RectF dst = sticker.getMappedBound();
-        return dst.contains(downX, downY);
+        boolean contains = dst.contains(downX, downY);
+        boolean pointInsideRotatedRect = isPointInsideRotatedRect(downX, downY, sticker.getMatrix(), dst);
+        if (contains != pointInsideRotatedRect) {
+            Log.i(TAG, "isInStickerArea:旋转角度点击不相同 contains = " + contains + " pointInsideRotatedRect = " + pointInsideRotatedRect);
+        }
+        return pointInsideRotatedRect;
+    }
+
+
+    public boolean isPointInsideRotatedRect(float x, float y, Matrix matrix, RectF rotatedRect) {
+        // 获取旋转角度
+        float[] values = new float[9];
+        matrix.getValues(values);
+        float scaleX = values[Matrix.MSCALE_X];
+        float skewY = values[Matrix.MSKEW_Y];
+        float rotationAngle = (float) Math.toDegrees(Math.atan2(skewY, scaleX));
+
+        Log.i(TAG, "isPointInsideRotatedRect:旋转角度 = " + rotationAngle + "  ");
+
+        // 将点 (x, y) 绕矩形中心逆时针旋转 -rotationAngle 度
+        float centerX = (rotatedRect.left + rotatedRect.right) / 2;
+        float centerY = (rotatedRect.top + rotatedRect.bottom) / 2;
+
+        float translatedX = x - centerX;
+        float translatedY = y - centerY;
+
+        double angleRadians = Math.toRadians(-rotationAngle);
+        float cos = (float) Math.cos(angleRadians);
+        float sin = (float) Math.sin(angleRadians);
+
+        float rotatedX = translatedX * cos - translatedY * sin + centerX;
+        float rotatedY = translatedX * sin + translatedY * cos + centerY;
+
+        // 检查点 (rotatedX, rotatedY) 是否在矩形的范围内
+        return rotatedRect.contains(rotatedX, rotatedY);
     }
 
     private PointF calculateMidPoint(MotionEvent event) {

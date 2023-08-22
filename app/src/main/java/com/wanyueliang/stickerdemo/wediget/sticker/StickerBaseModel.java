@@ -106,7 +106,7 @@ public abstract class StickerBaseModel {
                 AppLog.i(TAG, "buildStickerData: scaleY= " + (-(float) Math.cos(turnY)));
                 matrix.preScale((float) Math.cos(turnY), -(float) Math.cos(turnY), width / 2, height / 2);
             }
-            /*旋转角度的恢复*/
+                /*旋转角度的恢复*/
             matrix.postRotate(0 - degrees, offsetX, offsetY);
             AppLog.d(TAG, "buildStickerData: 数据的还原" + matrix.toString());
         }
